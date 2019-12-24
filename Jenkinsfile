@@ -4,7 +4,6 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Running build automation'
-            
             }
         }
          stage('Build Docker Image') {
@@ -12,10 +11,11 @@ pipeline {
                 branch 'master'
             }
             steps {
+			      echo 'Image starts'
                 script {
-                    app = docker.build("ajaykakumanu/train-schedule")
+                    app = docker.build("willbla/train-schedule")
                     app.inside {
-                        sh 'echo $(curl localhost:8080)'
+                   
                     }
                 }
             }
@@ -26,7 +26,7 @@ pipeline {
             }
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'vakaws') {
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_login') {
                         app.push("${env.BUILD_NUMBER}")
                         app.push("latest")
                     }
