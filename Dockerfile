@@ -1,7 +1,9 @@
 FROM node:carbon
+ENV NODE_ENV="development"
+ENV PORT 8080
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
 COPY . .
-EXPOSE 8080
+EXPOSE $PORT
 CMD [ "npm", "start" ]
