@@ -4,7 +4,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Running build automation'
-                  sh './gradlew build --no-daemon'
+				sh './gradlew build --no-daemon'
                 archiveArtifacts artifacts: 'dist/trainSchedule.zip' 				
             }
         }
@@ -15,10 +15,8 @@ pipeline {
             steps {
 			      echo 'Image starts'
                 script {
-                    app = docker.build("ajaykakumanu/train-schedule")
-                    app.inside {
-                     sh 'echo $(curl localhost:8080)'
-                    }
+                    app = docker.build("vakaws/train-schedule")
+                     sh 'docker run -p 8081:8080 -d vakaws/train-schedule'
                 }
             }
         }
