@@ -4,6 +4,8 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Running build automation'
+				sh './grdalew build --no-daemon'
+                archiveArtifacts artifacts: 'dist/trainSchedule.zip' 				
             }
         }
          stage('Build Docker Image') {
@@ -13,9 +15,9 @@ pipeline {
             steps {
 			      echo 'Image starts'
                 script {
-                    app = docker.build("willbla/train-schedule")
+                    app = docker.build("ajaykakumanu/train-schedule")
                     app.inside {
-                   
+                     sh 'echo $(curl localhost:8080)'
                     }
                 }
             }
