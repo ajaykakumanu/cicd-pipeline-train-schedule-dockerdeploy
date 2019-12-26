@@ -16,7 +16,7 @@ pipeline {
 			      echo 'Image starts'
                 script {
                     app = docker.build("vakaws/train-schedule")
-                     sh 'docker run -p 8081:8080 -d vakaws/train-schedule'
+                     sh 'docker run -p 8082:8080 -d vakaws/train-schedule'
                 }
             }
         }
