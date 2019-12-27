@@ -3,8 +3,9 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-		echo "PORT=${PORT}"
-                echo 'Running build automation'
+		echo "Service_PORT=${Service_PORT}"
+		echo "Docker_PORT=${Docker_PORT}" 
+	        echo 'Running build automation'
 				sh './gradlew build --no-daemon'
                 archiveArtifacts artifacts: 'dist/trainSchedule.zip' 				
             }
@@ -17,7 +18,7 @@ pipeline {
 			      echo 'Image starts'
                 script {
                     app = docker.build("vakaws/train-schedule")
-                     sh 'docker run -p 8082:8080 -d vakaws/train-schedule'
+                     sh 'docker run -p ${Service_PORT}:${Docker_PORT} -d vakaws/train-schedule'
                 }
             }
         }
